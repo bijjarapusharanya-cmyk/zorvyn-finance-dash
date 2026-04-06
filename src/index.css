@@ -1,13 +1,93 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-main: #0b0121;
+  --sidebar-bg: #0f012d;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+  --accent: #a855f7;
+  --bg-input: rgba(255, 255, 255, 0.05);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+[data-theme='light'] {
+  --bg-main: #fcfcf9;       
+  --sidebar-bg: #ffffff;    
+  --card-bg: #ffffff;       
+  --text-main: #1e293b;     
+  --text-muted: #475569;    
+  --border: #e2e8f0;        
+  --accent: #8b5cf6;
+  --bg-input: #f1f5f9;
+}
+
+html, body, #root {
+  height: 100%;
+  background-color: var(--bg-main);
+  margin: 0;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden; 
+}
+
+/* SIDEBAR FIX: Hide the active dot on mobile to save space */
+@media (min-width: 1024px) {
+  nav a.font-black::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--accent);
+    border-radius: 99px;
+  }
+}
+
+/* CARD FIX: Responsive padding and radius */
+.pro-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border); 
+  border-radius: 16px; /* Smaller radius for mobile */
+  padding: 14px;      /* Tighter padding to prevent text overlap */
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Desktop Card Adjustments */
+@media (min-width: 1024px) {
+  .pro-card {
+    border-radius: 24px;
+    padding: 24px;
+  }
+}
+
+[data-theme='light'] .pro-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* TABLE FIX: Allow transactions to scroll horizontally on small screens */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* SCROLLBAR */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+/* GLOBAL TEXT FIX: Prevents "Market Intelligence" from crashing on mobile */
+h1, h2, h3 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
